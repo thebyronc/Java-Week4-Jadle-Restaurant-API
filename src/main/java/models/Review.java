@@ -2,20 +2,21 @@ package models;
 
 import java.time.LocalDateTime;
 
-/**
- * Created by epicodus_staff on 7/25/17.
- */
 public class Review {
+
+
 
     private String writtenBy;
     private int rating;
     private LocalDateTime createdAt;
     private int id;
+    private int restaurantId;
 
 
-    public Review(String writtenBy, int rating) {
+    public Review(String writtenBy, int rating, int restaurantId) {
         this.writtenBy = writtenBy;
         this.rating = rating;
+        this.restaurantId = restaurantId;
         this.createdAt = LocalDateTime.now();
     }
 
@@ -37,5 +38,37 @@ public class Review {
         result = 31 * result + rating;
         result = 31 * result + id;
         return result;
+    }
+
+    public String getWrittenBy() {
+        return writtenBy;
+    }
+
+    public void setWrittenBy(String writtenBy) {
+        this.writtenBy = writtenBy;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
