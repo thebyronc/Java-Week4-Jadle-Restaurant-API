@@ -7,6 +7,7 @@ import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Sql2oRestaurantDao implements RestaurantDao{ //don't forget to shake hands with your interface!
@@ -61,6 +62,17 @@ public class Sql2oRestaurantDao implements RestaurantDao{ //don't forget to shak
     }
 
     @Override
+    public void addRestaurantToFoodtype(Restaurant restaurant, Foodtype foodtype){
+    //do stuff here.
+    }
+
+    @Override
+    public List<Foodtype> getAllFoodtypesForARestaurant(int restaurantId){
+        List<Foodtype> foodtypes = new ArrayList();
+        return foodtypes;
+    }
+
+    @Override
     public void update(int id, String newName, String newAddress, String newZipcode, String newPhone, String newWebsite, String newEmail, String newImage){
         String sql = "UPDATE restaurants SET (name, address, zipcode, phone, website, email, image) = (:name, :address, :zipcode, :phone, :website, :email, :image) WHERE id=:id"; //CHECK!!!
 
@@ -79,6 +91,4 @@ public class Sql2oRestaurantDao implements RestaurantDao{ //don't forget to shak
             System.out.println(ex);
         }
     }
-
-
 }

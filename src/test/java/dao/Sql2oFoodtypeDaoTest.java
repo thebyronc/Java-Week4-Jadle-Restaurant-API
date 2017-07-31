@@ -9,6 +9,10 @@ import org.junit.Test;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class Sql2oFoodtypeDaoTest {
@@ -16,7 +20,6 @@ public class Sql2oFoodtypeDaoTest {
     private Sql2oFoodtypeDao foodtypeDao;
     private Sql2oRestaurantDao restaurantDao;
     private Connection conn;
-
 
     @Before
     public void setUp() throws Exception {
@@ -60,10 +63,20 @@ public class Sql2oFoodtypeDaoTest {
         assertEquals(0, foodtypeDao.getAll().size());
     }
 
-//    @Test
-//    public void getAllRestaurantsForAFoodtypeReturnsRestaurantsCorrectly() throws Exception {
-//    }
+    @Test
+    public void getAllRestaurantsForAFoodtypeReturnsRestaurantsCorrectly() throws Exception {
+        Foodtype testFoodtype  = new Foodtype("Seafood");
+        foodtypeDao.add(testFoodtype);
 
+        Restaurant testRestaurant = setupRestaurant();
+        Restaurant altRestaurant = setupAltRestaurant();
+
+        restaurantDao.add(testRestaurant);
+        restaurantDao.add(altRestaurant);
+
+        Restaurant[] restaurants = {testRestaurant, altRestaurant};
+        assertEquals(foodtypeDao.getAllRestaurantsForAFoodtype(testFoodtype.getId()), Arrays.asList(restaurants));
+    }
 
     public Foodtype setupNewFoodtype(){
         return new Foodtype("Sushi");
@@ -71,12 +84,10 @@ public class Sql2oFoodtypeDaoTest {
 
     public Restaurant setupRestaurant (){
         return new Restaurant("Fish Witch", "214 NE Broadway", "97232", "503-402-9874", "http://fishwitch.com", "hellofishy@fishwitch.com", "fishwitch.jpg", DiningStyle.CASUAL );
-
     }
 
     public Restaurant setupAltRestaurant (){
         return new Restaurant("Fish Witch", "214 NE Broadway", "97232", "503-402-9874", DiningStyle.CASUAL);
-
     }
 
 }

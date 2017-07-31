@@ -6,6 +6,7 @@ import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -51,16 +52,15 @@ public class Sql2oFoodtypeDao implements FoodtypeDao{ //don't forget to shake ha
         }
     }
 
+    @Override
+    public void addFoodtypeToRestaurant(Foodtype foodtype, Restaurant restaurant){
+        //do stuff here.
+    }
 
-//    @Override
-//    public List<Restaurant> getRestaurantsByFoodtype(int foodtypeId) {
-//        try(Connection con = sql2o.open()){
-//            return con.createQuery("SELECT * FROM restaurants WHERE foodtypeId = :foodtypeId")
-//                    .addParameter("foodtypeId", foodtypeId)
-//                    .executeAndFetch(Restaurant.class);
-//        }
-//    }
-
-
+    @Override
+    public List<Restaurant> getAllRestaurantsForAFoodtype(int foodtypeId) {
+        List<Restaurant> restaurants = new ArrayList();
+        return restaurants;
+    }
 
 }

@@ -1,6 +1,7 @@
 package dao;
 
 import enums.DiningStyle;
+import models.Foodtype;
 import models.Restaurant;
 import models.Restaurant;
 import org.junit.After;
@@ -62,22 +63,22 @@ public class Sql2oRestaurantDaoTest {
         assertEquals(0, restaurantDao.getAll().size());
     }
 
-
-//    @Test
-//    public void getAllFoodtypesForARestaurantReturnsFoodtypesCorrectly() throws Exception {
-//    }
-
+    @Test
+    public void getAllFoodtypesForARestaurantReturnsFoodtypesCorrectly() throws Exception {
+        Foodtype testFoodtype  = new Foodtype("Seafood");
+        foodtypeDao.add(testFoodtype);
+        Restaurant testRestaurant = setupRestaurant();
+        restaurantDao.add(testRestaurant);
+        assertEquals(foodtypeDao.getAllRestaurantsForAFoodtype(testFoodtype.getId()).size(), 1);
+    }
 
     //helpers
 
     public Restaurant setupRestaurant (){
         return new Restaurant("Fish Witch", "214 NE Broadway", "97232", "503-402-9874", "http://fishwitch.com", "hellofishy@fishwitch.com", "fishwitch.jpg", DiningStyle.CASUAL );
-
     }
 
     public Restaurant setupAltRestaurant (){
         return new Restaurant("Fish Witch", "214 NE Broadway", "97232", "503-402-9874", DiningStyle.CASUAL);
-
     }
-
 }
