@@ -1,43 +1,34 @@
 package models;
 
+
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class Review {
 
-
-
+    private int id;
     private String writtenBy;
     private int rating;
-    private LocalDateTime createdAt;
-    private int id;
+    private Timestamp createdAt;
+    private String content;
     private int restaurantId;
 
-
-    public Review(String writtenBy, int rating, int restaurantId) {
+    public Review(String writtenBy, int rating, String content,int restaurantId) {
         this.writtenBy = writtenBy;
         this.rating = rating;
+        this.createdAt = Timestamp.valueOf(LocalDateTime.now());
+        this.content = content;
         this.restaurantId = restaurantId;
-        this.createdAt = LocalDateTime.now();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Review review = (Review) o;
-
-        if (rating != review.rating) return false;
-        if (id != review.id) return false;
-        return writtenBy.equals(review.writtenBy);
+    public int getId() {
+        return id;
     }
 
-    @Override
-    public int hashCode() {
-        int result = writtenBy.hashCode();
-        result = 31 * result + rating;
-        result = 31 * result + id;
-        return result;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getWrittenBy() {
@@ -56,19 +47,24 @@ public class Review {
         this.rating = rating;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
 
-    public int getId() {
-        return id;
+    public String getContent() {
+        return content;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setContent(String content) {
+        this.content = content;
     }
+
+    public int getRestaurantId() {
+        return restaurantId;
+    }
+
+    public void setRestaurantId(int restaurantId) {
+        this.restaurantId = restaurantId;
+    }
+
 }
