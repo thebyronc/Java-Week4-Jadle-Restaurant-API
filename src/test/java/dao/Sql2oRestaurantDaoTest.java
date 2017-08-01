@@ -10,6 +10,9 @@ import org.junit.Test;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import static org.junit.Assert.*;
 
 public class Sql2oRestaurantDaoTest {
@@ -65,11 +68,39 @@ public class Sql2oRestaurantDaoTest {
 
     @Test
     public void getAllFoodtypesForARestaurantReturnsFoodtypesCorrectly() throws Exception {
+            Foodtype testFoodtype  = new Foodtype("Seafood");
+            foodtypeDao.add(testFoodtype);
+
+            Foodtype otherFoodtype  = new Foodtype("Bar Food");
+            foodtypeDao.add(otherFoodtype);
+
+            Restaurant testRestaurant = setupRestaurant();
+            restaurantDao.add(testRestaurant);
+            restaurantDao.addRestaurantToFoodtype(testRestaurant,testFoodtype);
+            restaurantDao.addRestaurantToFoodtype(testRestaurant,otherFoodtype);
+        System.out.println(restaurantDao.getAllFoodtypesForARestaurant(testRestaurant.getId()));
+
+            Foodtype[] foodtypes = {testFoodtype, otherFoodtype}; //oh hi what is this?
+
+            assertEquals(restaurantDao.getAllFoodtypesForARestaurant(testRestaurant.getId()), Arrays.asList(foodtypes));
+        }
+
+    @Test
+    public void deleteingRestaurantAlsoUpdatesJoinTable() throws Exception {
         Foodtype testFoodtype  = new Foodtype("Seafood");
         foodtypeDao.add(testFoodtype);
+
         Restaurant testRestaurant = setupRestaurant();
         restaurantDao.add(testRestaurant);
-        assertEquals(foodtypeDao.getAllRestaurantsForAFoodtype(testFoodtype.getId()).size(), 1);
+
+        Restaurant altRestaurant = setupAltRestaurant();
+        restaurantDao.add(altRestaurant);
+
+        restaurantDao.addRestaurantToFoodtype(testRestaurant,testFoodtype);
+        restaurantDao.addRestaurantToFoodtype(altRestaurant, testFoodtype);
+
+        restaurantDao.deleteById(testRestaurant.getId());
+        assertEquals(0, restaurantDao.getAllFoodtypesForARestaurant(testRestaurant.getId()).size());
     }
 
     //helpers
