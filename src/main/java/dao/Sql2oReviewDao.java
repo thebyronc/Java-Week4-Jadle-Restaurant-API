@@ -5,6 +5,7 @@ import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
 
+import java.sql.Timestamp;
 import java.util.List;
 public class Sql2oReviewDao implements ReviewDao {
 
@@ -16,7 +17,8 @@ public class Sql2oReviewDao implements ReviewDao {
 
     @Override
     public void add(Review review) {
-        String sql = "INSERT INTO reviews (writtenBy, rating) VALUES (:writtenBy, :rating)";
+
+        String sql = "INSERT INTO reviews (writtenby, rating, createdat, content, restaurantid ) VALUES (:writtenBy, :rating, :createdAt, :content, :restaurantId )";
         try (Connection con = sql2o.open()) {
             int id = (int) con.createQuery(sql)
                     .bind(review)
@@ -44,11 +46,9 @@ public class Sql2oReviewDao implements ReviewDao {
     public List<Review> getAllReviewsByRestaurant(int restaurantId) {
         try (Connection con = sql2o.open()) {
             return con.createQuery("SELECT * FROM reviews WHERE restaurantId = :restaurantId")
-                    .addColumnMapping("RESTAURANTID", "restaurantId")
                     .addParameter("restaurantId", restaurantId)
                     .executeAndFetch(Review.class);
         }
     }
-
 
 }

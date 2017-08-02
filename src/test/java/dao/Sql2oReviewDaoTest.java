@@ -36,7 +36,7 @@ public class Sql2oReviewDaoTest {
     public void addingReviewSetsId() throws Exception {
         Restaurant testRestaurant = setupRestaurant();
         restaurantDao.add(testRestaurant);
-        Review testReview = new Review("Captain Kirk", 3, testRestaurant.getId());
+        Review testReview = new Review("Captain Kirk", 3, "foodcoma!",testRestaurant.getId());
         int originalReviewId = testReview.getId();
         reviewDao.add(testReview);
         assertNotEquals(originalReviewId,testReview.getId());
@@ -52,10 +52,10 @@ public class Sql2oReviewDaoTest {
         Restaurant testRestaurant = setupRestaurant();
         restaurantDao.add(testRestaurant);
 
-        Review testReview = new Review("Captain Kirk", 3, testRestaurant.getId());
+        Review testReview = new Review("Captain Kirk", 3, "foodcoma!",testRestaurant.getId());
         reviewDao.add(testReview);
 
-        assertEquals(testRestaurant.getId(), reviewDao.getAllReviewsByRestaurant(testRestaurant.getId()));
+        assertEquals(1, reviewDao.getAllReviewsByRestaurant(testRestaurant.getId()).size());
     }
 
     //helpers

@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS reviews (
   writtenby VARCHAR,
   rating VARCHAR,
   createdat TIMESTAMP,
+  content VARCHAR,
   restaurantid INTEGER
 );
 
