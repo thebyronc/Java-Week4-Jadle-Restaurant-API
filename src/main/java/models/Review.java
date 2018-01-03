@@ -4,20 +4,17 @@ import java.time.LocalDateTime;
 
 public class Review {
 
-
-
     private String writtenBy;
     private int rating;
     private LocalDateTime createdAt;
     private int id;
     private int restaurantId;
 
-
     public Review(String writtenBy, int rating, int restaurantId) {
         this.writtenBy = writtenBy;
         this.rating = rating;
         this.restaurantId = restaurantId;
-        this.createdAt = LocalDateTime.now();
+        this.createdAt = Timestamp.valueOf(LocalDateTime.now());
     }
 
     @Override
