@@ -45,6 +45,7 @@ public class Review {
 
     public void setRating(int rating) {
         this.rating = rating;
+        this.createdAt = Timestamp.valueOf(LocalDateTime.now());
     }
 
     public void setCreatedAt(Timestamp createdAt) {
