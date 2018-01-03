@@ -14,8 +14,7 @@ public class Review {
         this.writtenBy = writtenBy;
         this.rating = rating;
         this.restaurantId = restaurantId;
-        this.createdAt = LocalDateTime.now();
-
+        this.createdAt = Timestamp.valueOf(LocalDateTime.now());
     }
 
     @Override
