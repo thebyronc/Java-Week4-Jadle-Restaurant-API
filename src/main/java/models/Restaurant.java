@@ -2,6 +2,8 @@ package models;
 
 import enums.DiningStyle;
 
+import static enums.DiningStyle.*;
+
 public class Restaurant {
 
     private String name;
@@ -10,8 +12,8 @@ public class Restaurant {
     private String phone;
     private String website;
     private String email;
-    private int id;
     private DiningStyle diningStyle;
+    private int id;
 
     public Restaurant(String name, String address, String zipcode, String phone, DiningStyle diningStyle) {
         this.name = name;
@@ -21,9 +23,10 @@ public class Restaurant {
         this.website = "no website listed";
         this.email = "no email available";
         this.diningStyle = diningStyle;
+
     }
 
-    public Restaurant(String name, String address, String zipcode, String phone, String website, String email,  DiningStyle diningStyle) {
+    public Restaurant(String name, String address, String zipcode, String phone, String website, String email, DiningStyle diningStyle) {
         this.name = name;
         this.address = address;
         this.zipcode = zipcode;
@@ -32,34 +35,6 @@ public class Restaurant {
         this.email = email;
         this.diningStyle = diningStyle;
    }
-
-    public String getDiningStyle(){
-        String message;
-        switch (this.diningStyle){
-            case CASUAL:
-                message =  String.format("%s likes to keep things pretty casual. No stuffy suits here!", this.getName());
-            break;
-
-            case FASTFOOD:
-               message = String.format("%s is a fast food restaurant. Don't expect ambiance.", this.getName());
-                break;
-
-            case FOODCART:
-                message =  String.format("%s is part of the Portland Foodcart scene. Bring an umbrella if its raining!", this.getName());
-                break;
-
-            case FINEDINING:
-                message =  String.format("Get ready to spend some coin at %s. Don't arrive underdressed - it's posh.", this.getName());
-                break;
-
-           default:
-               message =  ("Something went wrong. Please try again.");
-               break;
-        }
-        return message;
-    }
-
-
 
     public String getName() {
         return name;
@@ -109,13 +84,39 @@ public class Restaurant {
         this.email = email;
     }
 
-
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getDiningStyle(){
+        String message;
+        switch (this.diningStyle){
+
+            case CASUAL:
+                message =  String.format("%s likes to keep things pretty casual. No stuffy suits here!", this.getName());
+                break;
+
+            case FASTFOOD:
+                message = String.format("%s is a fast food restaurant. Don't expect ambiance.", this.getName());
+                break;
+
+            case FOODCART:
+                message =  String.format("%s is part of the Portland Foodcart scene. Bring an umbrella if its raining!", this.getName());
+                break;
+
+            case FINEDINING:
+                message =  String.format("Get ready to spend some coin at %s. Don't arrive underdressed - it's posh.", this.getName());
+                break;
+
+            default:
+                message =  ("Something went wrong. Please try again.");
+                break;
+        }
+        return message;
     }
 
     @Override
@@ -129,6 +130,8 @@ public class Restaurant {
         if (!address.equals(that.address)) return false;
         if (!zipcode.equals(that.zipcode)) return false;
         if (!phone.equals(that.phone)) return false;
+        if (website != null ? !website.equals(that.website) : that.website != null) return false;
+        if (email != null ? !email.equals(that.email) : that.email != null) return false;
         return diningStyle == that.diningStyle;
     }
 
@@ -138,6 +141,8 @@ public class Restaurant {
         result = 31 * result + address.hashCode();
         result = 31 * result + zipcode.hashCode();
         result = 31 * result + phone.hashCode();
+        result = 31 * result + (website != null ? website.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + diningStyle.hashCode();
         return result;
     }
