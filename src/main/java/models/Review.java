@@ -6,41 +6,13 @@ public class Review {
     private String writtenBy;
     private int rating;
     private String content;
-    private int id;
     private int restaurantId;
 
     public Review(String writtenBy, int rating, String content, int restaurantId) {
         this.writtenBy = writtenBy;
         this.rating = rating;
-
         this.content = content;
         this.restaurantId = restaurantId;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Review review = (Review) o;
-
-        if (id != review.id) return false;
-        if (rating != review.rating) return false;
-        if (id != review.id) return false;
-        if (restaurantId != review.restaurantId) return false;
-        if (writtenBy != null ? !writtenBy.equals(review.writtenBy) : review.writtenBy != null) return false;
-        return content != null ? content.equals(review.content) : review.content == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + (writtenBy != null ? writtenBy.hashCode() : 0);
-        result = 31 * result + rating;
-        result = 31 * result + (content != null ? content.hashCode() : 0);
-        result = 31 * result + id;
-        result = 31 * result + restaurantId;
-        return result;
     }
 
     public int getId() {
@@ -52,7 +24,7 @@ public class Review {
     }
 
     public String getWrittenBy() {
-        return this.writtenBy;
+        return writtenBy;
     }
 
     public void setWrittenBy(String writtenBy) {
@@ -60,23 +32,15 @@ public class Review {
     }
 
     public int getRating() {
-        return this.rating;
+        return rating;
     }
 
     public void setRating(int rating) {
         this.rating = rating;
     }
 
-//    public String getCreatedAt() {
-//      I will get created soon.
-//    }
-
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public String getContent() {
-        return this.content;
+        return content;
     }
 
     public void setContent(String content) {
@@ -84,11 +48,32 @@ public class Review {
     }
 
     public int getRestaurantId() {
-        return this.restaurantId;
+        return restaurantId;
     }
 
     public void setRestaurantId(int restaurantId) {
         this.restaurantId = restaurantId;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Review review = (Review) o;
+
+        if (rating != review.rating) return false;
+        if (restaurantId != review.restaurantId) return false;
+        if (!writtenBy.equals(review.writtenBy)) return false;
+        return content.equals(review.content);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = writtenBy.hashCode();
+        result = 31 * result + rating;
+        result = 31 * result + content.hashCode();
+        result = 31 * result + restaurantId;
+        return result;
+    }
 }
