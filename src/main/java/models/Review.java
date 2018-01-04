@@ -1,12 +1,12 @@
 package models;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class Review {
 
     private String writtenBy;
     private int rating;
-    private LocalDateTime createdAt;
     private int id;
     private int restaurantId;
 
@@ -14,7 +14,6 @@ public class Review {
         this.writtenBy = writtenBy;
         this.rating = rating;
         this.restaurantId = restaurantId;
-        this.createdAt = Timestamp.valueOf(LocalDateTime.now());
     }
 
     @Override
@@ -26,14 +25,16 @@ public class Review {
 
         if (rating != review.rating) return false;
         if (id != review.id) return false;
-        return writtenBy.equals(review.writtenBy);
+        if (restaurantId != review.restaurantId) return false;
+        return writtenBy != null ? writtenBy.equals(review.writtenBy) : review.writtenBy == null;
     }
 
     @Override
     public int hashCode() {
-        int result = writtenBy.hashCode();
+        int result = writtenBy != null ? writtenBy.hashCode() : 0;
         result = 31 * result + rating;
         result = 31 * result + id;
+        result = 31 * result + restaurantId;
         return result;
     }
 }
