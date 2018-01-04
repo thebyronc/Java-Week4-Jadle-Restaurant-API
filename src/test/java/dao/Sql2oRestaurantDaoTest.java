@@ -25,7 +25,7 @@ public class Sql2oRestaurantDaoTest {
 
     @Before
     public void setUp() throws Exception {
-        String connectionString = "jdbc:h2:mem:testing;INIT=RUNSCRIPT from 'classpath:db/create.sql'";
+        String connectionString = "jdbc:postgresql://localhost:5432/jadle_test";
         Sql2o sql2o = new Sql2o(connectionString, "", "");
         restaurantDao = new Sql2oRestaurantDao(sql2o);
         foodtypeDao = new Sql2oFoodtypeDao(sql2o);
@@ -106,7 +106,7 @@ public class Sql2oRestaurantDaoTest {
     //helpers
 
     public Restaurant setupRestaurant (){
-        return new Restaurant("Fish Witch", "214 NE Broadway", "97232", "503-402-9874", "http://fishwitch.com", "hellofishy@fishwitch.com", "fishwitch.jpg", DiningStyle.CASUAL );
+        return new Restaurant("Fish Witch", "214 NE Broadway", "97232", "503-402-9874", "http://fishwitch.com", "hellofishy@fishwitch.com", DiningStyle.CASUAL );
     }
 
     public Restaurant setupAltRestaurant (){
