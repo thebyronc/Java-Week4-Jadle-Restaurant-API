@@ -1,21 +1,18 @@
 package models;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-
 public class Review {
 
     private int id;
     private String writtenBy;
     private int rating;
-    private Timestamp createdAt;
     private String content;
+    private int id;
     private int restaurantId;
 
     public Review(String writtenBy, int rating, String content, int restaurantId) {
         this.writtenBy = writtenBy;
         this.rating = rating;
-        this.createdAt = Timestamp.valueOf(LocalDateTime.now());
+
         this.content = content;
         this.restaurantId = restaurantId;
     }
@@ -29,17 +26,19 @@ public class Review {
 
         if (id != review.id) return false;
         if (rating != review.rating) return false;
+        if (id != review.id) return false;
         if (restaurantId != review.restaurantId) return false;
-        if (!writtenBy.equals(review.writtenBy)) return false;
-        return content.equals(review.content);
+        if (writtenBy != null ? !writtenBy.equals(review.writtenBy) : review.writtenBy != null) return false;
+        return content != null ? content.equals(review.content) : review.content == null;
     }
 
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + writtenBy.hashCode();
+        result = 31 * result + (writtenBy != null ? writtenBy.hashCode() : 0);
         result = 31 * result + rating;
-        result = 31 * result + content.hashCode();
+        result = 31 * result + (content != null ? content.hashCode() : 0);
+        result = 31 * result + id;
         result = 31 * result + restaurantId;
         return result;
     }
