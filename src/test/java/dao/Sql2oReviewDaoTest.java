@@ -21,7 +21,7 @@ public class Sql2oReviewDaoTest {
     @Before
     public void setUp() throws Exception {
         String connectionString = "jdbc:postgresql://localhost:5432/jadle_test";
-        Sql2o sql2o = new Sql2o(connectionString, "", "");
+        Sql2o sql2o = new Sql2o(connectionString, null, null);
         reviewDao = new Sql2oReviewDao(sql2o);
         restaurantDao = new Sql2oRestaurantDao(sql2o);
         conn = sql2o.open();
