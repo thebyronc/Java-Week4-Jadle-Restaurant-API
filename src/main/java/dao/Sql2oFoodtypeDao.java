@@ -52,15 +52,4 @@ public class Sql2oFoodtypeDao implements FoodtypeDao{ //don't forget to shake ha
     }
 
 
-//    @Override
-//    public List<Restaurant> getRestaurantsByFoodtype(int foodtypeId) {
-//        try(Connection con = sql2o.open()){
-//            return con.createQuery("SELECT * FROM restaurants WHERE foodtypeId = :foodtypeId")
-//                    .addParameter("foodtypeId", foodtypeId)
-//                    .executeAndFetch(Restaurant.class);
-//        }
-//    }
-
-
-
 }

@@ -1,8 +1,5 @@
 package models;
 
-import enums.DiningStyle;
-
-import static enums.DiningStyle.*;
 
 public class Restaurant {
 
@@ -12,28 +9,24 @@ public class Restaurant {
     private String phone;
     private String website;
     private String email;
-    private DiningStyle diningStyle;
     private int id;
 
-    public Restaurant(String name, String address, String zipcode, String phone, DiningStyle diningStyle) {
+    public Restaurant(String name, String address, String zipcode, String phone) {
         this.name = name;
         this.address = address;
         this.zipcode = zipcode;
         this.phone = phone;
         this.website = "no website listed";
         this.email = "no email available";
-        this.diningStyle = diningStyle;
-
     }
 
-    public Restaurant(String name, String address, String zipcode, String phone, String website, String email, DiningStyle diningStyle) {
+    public Restaurant(String name, String address, String zipcode, String phone, String website, String email) {
         this.name = name;
         this.address = address;
         this.zipcode = zipcode;
         this.phone = phone;
         this.website = website;
-        this.email = email;
-        this.diningStyle = diningStyle;
+        this.email = email;;
    }
 
     public String getName() {
@@ -92,33 +85,6 @@ public class Restaurant {
         this.id = id;
     }
 
-    public String getDiningStyle(){
-        String message;
-        switch (this.diningStyle){
-
-            case CASUAL:
-                message =  String.format("%s likes to keep things pretty casual. No stuffy suits here!", this.getName());
-                break;
-
-            case FASTFOOD:
-                message = String.format("%s is a fast food restaurant. Don't expect ambiance.", this.getName());
-                break;
-
-            case FOODCART:
-                message =  String.format("%s is part of the Portland Foodcart scene. Bring an umbrella if its raining!", this.getName());
-                break;
-
-            case FINEDINING:
-                message =  String.format("Get ready to spend some coin at %s. Don't arrive underdressed - it's posh.", this.getName());
-                break;
-
-            default:
-                message =  ("Something went wrong. Please try again.");
-                break;
-        }
-        return message;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -126,13 +92,13 @@ public class Restaurant {
 
         Restaurant that = (Restaurant) o;
 
+        if (id != that.id) return false;
         if (!name.equals(that.name)) return false;
         if (!address.equals(that.address)) return false;
         if (!zipcode.equals(that.zipcode)) return false;
         if (!phone.equals(that.phone)) return false;
         if (website != null ? !website.equals(that.website) : that.website != null) return false;
-        if (email != null ? !email.equals(that.email) : that.email != null) return false;
-        return diningStyle == that.diningStyle;
+        return email != null ? email.equals(that.email) : that.email == null;
     }
 
     @Override
@@ -143,7 +109,7 @@ public class Restaurant {
         result = 31 * result + phone.hashCode();
         result = 31 * result + (website != null ? website.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + diningStyle.hashCode();
+        result = 31 * result + id;
         return result;
     }
 }

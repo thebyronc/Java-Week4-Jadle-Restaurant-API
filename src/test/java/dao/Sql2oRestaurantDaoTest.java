@@ -1,7 +1,5 @@
 package dao;
 
-import enums.DiningStyle;
-import models.Restaurant;
 import models.Restaurant;
 import org.junit.After;
 import org.junit.Before;
@@ -16,16 +14,16 @@ public class Sql2oRestaurantDaoTest {
     private Connection conn;
     private Sql2oRestaurantDao restaurantDao;
     private Sql2oFoodtypeDao foodtypeDao;
-    //private Sql2oReviewDao reviewDao;
+    private Sql2oReviewDao reviewDao;
 
 
     @Before
     public void setUp() throws Exception {
-        String connectionString = "jdbc:postgresql://localhost:5432/jadle_test";
-        Sql2o sql2o = new Sql2o(connectionString, null, null);
+        String connectionString = "jdbc:h2:mem:testing;INIT=RUNSCRIPT from 'classpath:db/create.sql'";
+        Sql2o sql2o = new Sql2o(connectionString, "", "");
         restaurantDao = new Sql2oRestaurantDao(sql2o);
         foodtypeDao = new Sql2oFoodtypeDao(sql2o);
-        //reviewDao = new Sql2oRestaurantDao(sql2o);
+        reviewDao = new Sql2oReviewDao(sql2o);
         conn = sql2o.open();
     }
 
@@ -65,12 +63,12 @@ public class Sql2oRestaurantDaoTest {
     //helpers
 
     public Restaurant setupRestaurant (){
-        return new Restaurant("Fish Witch", "214 NE Broadway", "97232", "503-402-9874", "http://fishwitch.com", "hellofishy@fishwitch.com", DiningStyle.CASUAL );
+        return new Restaurant("Fish Witch", "214 NE Broadway", "97232", "503-402-9874", "http://fishwitch.com", "hellofishy@fishwitch.com");
 
     }
 
     public Restaurant setupAltRestaurant (){
-        return new Restaurant("Fish Witch", "214 NE Broadway", "97232", "503-402-9874", DiningStyle.CASUAL);
+        return new Restaurant("Fish Witch", "214 NE Broadway", "97232", "503-402-9874");
 
     }
 

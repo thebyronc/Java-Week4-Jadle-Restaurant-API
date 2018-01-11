@@ -53,11 +53,6 @@ public class RestaurantTest {
         assertEquals("no email available", testRestaurant.getEmail());
     }
 
-    @Test
-    public void getDiningStylereturnsCorrectPhrase() throws Exception {
-        Restaurant testRestaurant = setupRestaurant();
-        assertEquals("Fish Witch likes to keep things pretty casual. No stuffy suits here!", testRestaurant.getDiningStyle());
-    }
 
     //setter tests
 
@@ -105,12 +100,12 @@ public class RestaurantTest {
     //helpers
 
     public Restaurant setupRestaurant (){
-        return new Restaurant("Fish Witch", "214 NE Broadway", "97232", "503-402-9874", "http://fishwitch.com", "hellofishy@fishwitch.com", DiningStyle.CASUAL );
+        return new Restaurant("Fish Witch", "214 NE Broadway", "97232", "503-402-9874", "http://fishwitch.com", "hellofishy@fishwitch.com");
 
     }
 
     public Restaurant setupAltRestaurant (){
-        return new Restaurant("Fish Witch", "214 NE Broadway", "97232", "503-402-9874", DiningStyle.CASUAL);
+        return new Restaurant("Fish Witch", "214 NE Broadway", "97232", "503-402-9874");
 
     }
 
