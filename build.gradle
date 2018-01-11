@@ -17,5 +17,8 @@ dependencies {
   compile 'com.google.code.gson:gson:2.8.2'
   compile group: 'postgresql', name: 'postgresql', version: '9.1-901-1.jdbc4'
   compile group: 'com.h2database', name: 'h2', version: '1.4.191'
+<<<<<<< HEAD
 
+=======
+>>>>>>> b42fbc4... Add additional test for restaurants and foodtypes
 }

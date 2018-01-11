@@ -57,6 +57,4 @@ public class Sql2oReviewDao implements ReviewDao {
         }
     }
 
-
-
 }
