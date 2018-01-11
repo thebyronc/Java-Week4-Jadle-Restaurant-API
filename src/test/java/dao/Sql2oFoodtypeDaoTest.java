@@ -98,6 +98,24 @@ public class Sql2oFoodtypeDaoTest {
     }
 
 
+    public void getAllRestaurantsByFoodtypeReturnsRestaurantsCorrectly() throws Exception {
+        Foodtype foodtype = setupNewFoodtype();
+        foodtypeDao.add(foodtype);
+        int foodtypeId = foodtype.getId();
+        Restaurant newRestaurant = setupRestaurant();
+        Restaurant otherRestaurant = setupAltRestaurant();
+        Restaurant thirdRestaurant = new Restaurant("La Iconique", "1300 NW Raleigh", "97202", "503-102-1874", "http://laiconique.com", "info@laiconique.com");
+        restaurantDao.add(newRestaurant);
+        restaurantDao.add(otherRestaurant); //we are not adding restaurant 3 so we can test things precisely.
+        foodtypeDao.addFoodtypeToRestaurant(foodtype,newRestaurant);
+        foodtypeDao.addFoodtypeToRestaurant(foodtype,otherRestaurant);
+
+
+        assertTrue(foodtypeDao.getAllRestaurantsForAFoodtype(foodtypeId).size() == 2);
+        assertTrue(foodtypeDao.getAllRestaurantsForAFoodtype(foodtypeId).contains(newRestaurant));
+        assertTrue(foodtypeDao.getAllRestaurantsForAFoodtype(foodtypeId).contains(otherRestaurant));
+        assertFalse(foodtypeDao.getAllRestaurantsForAFoodtype(foodtypeId).contains(thirdRestaurant)); //things are accurate!
+    }
 
     public Foodtype setupNewFoodtype(){
         return new Foodtype("Sushi");
