@@ -17,5 +17,4 @@ dependencies {
   compile group: 'org.sql2o', name: 'sql2o', version: '1.6.0-RC3'
   compile group: 'postgresql', name: 'postgresql', version: '9.1-901-1.jdbc4'
   compile group: 'com.h2database', name: 'h2', version: '1.4.191'
-
 }
