@@ -1,5 +1,10 @@
 package models;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
+
 public class Review {
 
     private int id;
@@ -7,12 +12,14 @@ public class Review {
     private int rating;
     private String content;
     private int restaurantId;
+    private long createdat;
 
     public Review(String writtenBy, int rating, String content, int restaurantId) {
         this.writtenBy = writtenBy;
         this.rating = rating;
         this.content = content;
         this.restaurantId = restaurantId;
+        this.createdat = System.currentTimeMillis();
     }
 
     public int getId() {
@@ -53,6 +60,18 @@ public class Review {
 
     public void setRestaurantId(int restaurantId) {
         this.restaurantId = restaurantId;
+    }
+
+    public long getcreatedat() {
+        return createdat;
+    }
+
+
+    public String getFormattedCreatedAt(){
+        Date date = new Date(createdat);
+        String datePatternToUse = "MM/dd/yyyy @ K:mm a"; //see https://docs.oracle.com/javase/7/docs/api/java/text/SimpleDateFormat.html
+        SimpleDateFormat sdf = new SimpleDateFormat(datePatternToUse);
+        return sdf.format(date);
     }
 
     @Override

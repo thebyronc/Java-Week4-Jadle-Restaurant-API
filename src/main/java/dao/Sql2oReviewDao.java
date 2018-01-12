@@ -17,8 +17,7 @@ public class Sql2oReviewDao implements ReviewDao {
 
     @Override
     public void add(Review review) {
-
-        String sql = "INSERT INTO reviews (writtenby, rating, createdat, content, restaurantid ) VALUES (:writtenBy, :rating, :createdAt, :content, :restaurantId )";
+        String sql = "INSERT INTO reviews (writtenby, rating, content, restaurantid, createdat) VALUES (:writtenBy, :rating, :content, :restaurantId, :createdat)";
         try (Connection con = sql2o.open()) {
             int id = (int) con.createQuery(sql)
                     .bind(review)
@@ -47,6 +46,14 @@ public class Sql2oReviewDao implements ReviewDao {
         try (Connection con = sql2o.open()) {
             return con.createQuery("SELECT * FROM reviews WHERE restaurantId = :restaurantId")
                     .addParameter("restaurantId", restaurantId)
+                    .executeAndFetch(Review.class);
+        }
+    }
+
+    @Override
+    public List<Review> getAll() {
+        try (Connection con = sql2o.open()) {
+            return con.createQuery("SELECT * FROM reviews")
                     .executeAndFetch(Review.class);
         }
     }
