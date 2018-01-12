@@ -6,6 +6,7 @@ import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 public class Sql2oReviewDao implements ReviewDao {
 
@@ -56,6 +57,30 @@ public class Sql2oReviewDao implements ReviewDao {
             return con.createQuery("SELECT * FROM reviews")
                     .executeAndFetch(Review.class);
         }
+    }
+
+    @Override
+    public List<Review> getAllReviewsByRestaurantSortedNewestToOldest() {
+        List<Review> unsortedReviews;
+        List<Review> sortedReviews = new ArrayList<>();
+        try (Connection con = sql2o.open()) {
+         unsortedReviews = con.createQuery("SELECT * FROM reviews")
+                    .executeAndFetch(Review.class);
+        }
+
+        for (int i = 0; i < unsortedReviews.size()-1; i++){
+            int comparisonResult = unsortedReviews.get(i).compare(unsortedReviews.get(i),unsortedReviews.get(i+1));
+            if (comparisonResult == -1 && unsortedReviews.size() > i+1 ){
+                sortedReviews.add(unsortedReviews.get(i+1));
+            }
+            else if (comparisonResult == 0 ){
+                sortedReviews.add(unsortedReviews.get(i)); //probably should have a tie breaker here
+            }
+            else {
+                sortedReviews.add(unsortedReviews.get(i));
+            }
+        }
+    return sortedReviews;
     }
 
 }

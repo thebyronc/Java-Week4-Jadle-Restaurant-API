@@ -3,9 +3,10 @@ package models;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 
-public class Review {
+public class Review implements Comparator<Review> {
 
     private int id;
     private String writtenBy;
@@ -73,6 +74,21 @@ public class Review {
         SimpleDateFormat sdf = new SimpleDateFormat(datePatternToUse);
         return sdf.format(date);
     }
+
+    @Override
+    public int compare(Review review1ToCompare, Review review2toCompare) {
+
+        if (review1ToCompare.createdat < review2toCompare.createdat) {
+            return -1;
+        }
+        else if ( review1ToCompare.createdat == review2toCompare.createdat){
+            return 0;
+        }
+        else {
+            return 1;
+        }
+    }
+
 
     @Override
     public boolean equals(Object o) {
