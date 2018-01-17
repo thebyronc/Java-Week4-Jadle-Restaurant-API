@@ -19,7 +19,7 @@ public class Sql2oRestaurantDao implements RestaurantDao{ //don't forget to shak
 
     @Override
     public void add(Restaurant restaurant) {
-        String sql = "INSERT INTO restaurants (name, address, zipcode, phone, website, email, image) VALUES (:name, :address, :zipcode, :phone, :website, :email, :image)";
+        String sql = "INSERT INTO restaurants (name, address, zipcode, phone, website, email) VALUES (:name, :address, :zipcode, :phone, :website, :email)";
         try(Connection con = sql2o.open()){
             int id = (int) con.createQuery(sql)
                     .bind(restaurant)
@@ -61,8 +61,8 @@ public class Sql2oRestaurantDao implements RestaurantDao{ //don't forget to shak
     }
 
     @Override
-    public void update(int id, String newName, String newAddress, String newZipcode, String newPhone, String newWebsite, String newEmail, String newImage){
-        String sql = "UPDATE restaurants SET (name, address, zipcode, phone, website, email, image) = (:name, :address, :zipcode, :phone, :website, :email, :image) WHERE id=:id"; //CHECK!!!
+    public void update(int id, String newName, String newAddress, String newZipcode, String newPhone, String newWebsite, String newEmail){
+        String sql = "UPDATE restaurants SET (name, address, zipcode, phone, website, email) = (:name, :address, :zipcode, :phone, :website, :email) WHERE id=:id";
 
         try(Connection con = sql2o.open()){
             con.createQuery(sql)
@@ -72,7 +72,6 @@ public class Sql2oRestaurantDao implements RestaurantDao{ //don't forget to shak
                     .addParameter("phone", newPhone)
                     .addParameter("website", newWebsite)
                     .addParameter("email", newEmail)
-                    .addParameter("image", newImage)
                     .addParameter("id", id)
                     .executeUpdate();
         } catch (Sql2oException ex) {
