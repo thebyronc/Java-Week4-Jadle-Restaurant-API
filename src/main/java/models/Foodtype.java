@@ -26,21 +26,5 @@ public class Foodtype {
         this.id = id;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Foodtype foodtype = (Foodtype) o;
-
-        if (id != foodtype.id) return false;
-        return name.equals(foodtype.name);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = name.hashCode();
-        result = 31 * result + id;
-        return result;
-    }
+    //please generate hashCode and equals so they are correct for your project
 }
