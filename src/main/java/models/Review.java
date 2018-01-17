@@ -55,25 +55,5 @@ public class Review {
         this.restaurantId = restaurantId;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Review review = (Review) o;
-
-        if (rating != review.rating) return false;
-        if (restaurantId != review.restaurantId) return false;
-        if (!writtenBy.equals(review.writtenBy)) return false;
-        return content.equals(review.content);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = writtenBy.hashCode();
-        result = 31 * result + rating;
-        result = 31 * result + content.hashCode();
-        result = 31 * result + restaurantId;
-        return result;
-    }
+    //please generate hashCode and equals so they are correct for your project
 }
