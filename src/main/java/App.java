@@ -23,8 +23,8 @@ public class App {
         Sql2oReviewDao reviewDao;
         Connection conn;
         Gson gson = new Gson();
-        String connectionString = "jdbc:postgresql://localhost:5432/jadle"; //check me!
-        Sql2o sql2o = new Sql2o(connectionString, null, null);
+        String connectionString = "jdbc:h2:mem:testing;INIT=RUNSCRIPT from 'classpath:db/create.sql'";
+        Sql2o sql2o = new Sql2o(connectionString, "", "");
         restaurantDao = new Sql2oRestaurantDao(sql2o);
         foodtypeDao = new Sql2oFoodtypeDao(sql2o);
         reviewDao = new Sql2oReviewDao(sql2o);
@@ -46,30 +46,6 @@ public class App {
             res.status(201);;
             return gson.toJson(foodtype);
         });
-
-
-
-
-
-
-
-// TODO: 8/3/17 work on this next.
-//        post("/restaurants/:restaurantId/foodtype/:foodtypeId", "application/json", (req, res) -> {
-//
-//            int restaurantId = Integer.parseInt("restaurantId");
-//            int foodtypeId = Integer.parseInt("foodtypeId");
-//
-//            if () //find the restaurant
-//                  //find the foodtype
-//                //if neither exist - error
-//                //if both exist - make the join table association
-//
-//
-//            Restaurant restaurant = gson.fromJson(req.body(), Restaurant.class);
-//            restaurantDao.add(restaurant);
-//            res.status(201);;
-//            return gson.toJson(restaurant);
-//        });
 
         //READ
 
