@@ -84,31 +84,6 @@ public class Restaurant {
         this.id = id;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    //please generate hashCode and equals so they are correct for your project
 
-        Restaurant that = (Restaurant) o;
-
-        if (id != that.id) return false;
-        if (!name.equals(that.name)) return false;
-        if (!address.equals(that.address)) return false;
-        if (!zipcode.equals(that.zipcode)) return false;
-        if (!phone.equals(that.phone)) return false;
-        if (website != null ? !website.equals(that.website) : that.website != null) return false;
-        return email != null ? email.equals(that.email) : that.email == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = name.hashCode();
-        result = 31 * result + address.hashCode();
-        result = 31 * result + zipcode.hashCode();
-        result = 31 * result + phone.hashCode();
-        result = 31 * result + (website != null ? website.hashCode() : 0);
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + id;
-        return result;
-    }
 }
