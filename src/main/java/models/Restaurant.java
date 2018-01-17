@@ -18,6 +18,7 @@ public class Restaurant {
         this.phone = phone;
         this.website = "no website listed";
         this.email = "no email available";
+
     }
 
     public Restaurant(String name, String address, String zipcode, String phone, String website, String email) {
@@ -26,8 +27,9 @@ public class Restaurant {
         this.zipcode = zipcode;
         this.phone = phone;
         this.website = website;
-        this.email = email;;
+        this.email = email;
    }
+
 
     public String getName() {
         return name;
@@ -76,6 +78,7 @@ public class Restaurant {
     public void setEmail(String email) {
         this.email = email;
     }
+
 
     public int getId() {
         return id;
