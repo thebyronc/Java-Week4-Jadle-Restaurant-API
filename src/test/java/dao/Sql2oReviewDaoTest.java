@@ -79,7 +79,6 @@ public class Sql2oReviewDaoTest {
         reviewDao.add(testReview);
         Review secondReview = new Review("Mr Spock", 1, "passable", 1234); //to be sure the right one gets deleted, i am adding a second review for a fake restaurant.
         reviewDao.add(secondReview);
-
         assertEquals(testReview, reviewDao.getAllReviewsByRestaurant(testRestaurant.getId()).get(0));
     }
 
