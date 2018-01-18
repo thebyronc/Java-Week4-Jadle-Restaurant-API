@@ -6,7 +6,7 @@ import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
 
-public class Review implements Comparator<Review> {
+public class Review implements Comparable<Review> {
 
     private int id;
     private String writtenBy;
@@ -75,20 +75,35 @@ public class Review implements Comparator<Review> {
         return sdf.format(date);
     }
 
-    @Override
-    public int compare(Review review1ToCompare, Review review2toCompare) {
+//    @Override
+//    public int compare(Review review1ToCompare, Review review2toCompare) {
+//
+//        if (review1ToCompare.createdat < review2toCompare.createdat) {
+//            return -1;
+//        }
+//        else if ( review1ToCompare.createdat == review2toCompare.createdat){
+//            return 0;
+//        }
+//        else {
+//            return 1;
+//        }
+//    }
 
-        if (review1ToCompare.createdat < review2toCompare.createdat) {
-            return -1;
+
+    @Override
+    public int compareTo(Review o) {
+        if (this.createdat < o.createdat)
+        {
+            return -1; //this object was made earlier than the second object.
         }
-        else if ( review1ToCompare.createdat == review2toCompare.createdat){
-            return 0;
+        else if (this.createdat > o.createdat){ //this object was made later than the second object
+            return +1;
         }
+
         else {
-            return 1;
+            return 0; //they were made at the same time, which is very unlikely.
         }
     }
-
 
     @Override
     public boolean equals(Object o) {

@@ -63,24 +63,22 @@ public class Sql2oReviewDao implements ReviewDao {
     public List<Review> getAllReviewsByRestaurantSortedNewestToOldest() {
         List<Review> unsortedReviews;
         List<Review> sortedReviews = new ArrayList<>();
+
         try (Connection con = sql2o.open()) {
-         unsortedReviews = con.createQuery("SELECT * FROM reviews")
-                    .executeAndFetch(Review.class);
+            unsortedReviews = con.createQuery("SELECT * FROM reviews")
+                    .executeAndFetch(Review.class); //we have an unsorted list.
+        }
+        for (int i = 0; i < unsortedReviews.size()-1; i++) {
+            int comparisonResult = unsortedReviews.get(i).compareTo(unsortedReviews.get(i + 1));
+            if (comparisonResult == -1) { //first object was made earlier than second object
+                sortedReviews.add(0,unsortedReviews.get(i + 1)); //push the second object to the top of the list.
+            } else if (comparisonResult == 0) {
+                sortedReviews.add(0,unsortedReviews.get(i)); //probably should have a tie breaker here as they are the same.
+            } else {
+                sortedReviews.add(0,unsortedReviews.get(i)); //push the object to the list as it is newer than the second object.
+            }
         }
 
-        for (int i = 0; i < unsortedReviews.size()-1; i++){
-            int comparisonResult = unsortedReviews.get(i).compare(unsortedReviews.get(i),unsortedReviews.get(i+1));
-            if (comparisonResult == -1 && unsortedReviews.size() > i+1 ){
-                sortedReviews.add(unsortedReviews.get(i+1));
-            }
-            else if (comparisonResult == 0 ){
-                sortedReviews.add(unsortedReviews.get(i)); //probably should have a tie breaker here
-            }
-            else {
-                sortedReviews.add(unsortedReviews.get(i));
-            }
-        }
     return sortedReviews;
     }
-
 }

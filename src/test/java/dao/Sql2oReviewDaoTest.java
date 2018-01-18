@@ -65,7 +65,6 @@ public class Sql2oReviewDaoTest {
         reviewDao.add(testReview);
 
         long creationTime = testReview.getcreatedat();
-        System.out.println(testReview.getFormattedCreatedAt());
         assertEquals(creationTime, reviewDao.getAll().get(0).getcreatedat());
     }
 
@@ -76,7 +75,7 @@ public class Sql2oReviewDaoTest {
         Review testReview = new Review("Captain Kirk", 3, "foodcoma!", testRestaurant.getId());
         reviewDao.add(testReview);
         try {
-            Thread.sleep(6000);
+            Thread.sleep(2000);
         }
         catch (InterruptedException ex){
             ex.printStackTrace();
@@ -85,10 +84,27 @@ public class Sql2oReviewDaoTest {
         Review testSecondReview = new Review("Mr Spock", 1, "passable", testRestaurant.getId());
         reviewDao.add(testSecondReview);
 
-        System.out.println(reviewDao.getAllReviewsByRestaurantSortedNewestToOldest().get(0).getContent());
-        System.out.println(reviewDao.getAllReviewsByRestaurantSortedNewestToOldest().get(1).getContent());
+        try {
+            Thread.sleep(2000);
+        }
+        catch (InterruptedException ex){
+            ex.printStackTrace();
+        }
 
-        assertTrue(reviewDao.getAllReviewsByRestaurantSortedNewestToOldest().get(0).getContent().equals("passable"));
+        Review testThirdReview = new Review("Scotty", 4, "bloody good grub!", testRestaurant.getId());
+        reviewDao.add(testThirdReview);
+
+        try {
+            Thread.sleep(2000);
+        }
+        catch (InterruptedException ex){
+            ex.printStackTrace();
+        }
+
+        Review testFourthReview = new Review("Sulu", 2, "I prefer home cooking", testRestaurant.getId());
+        reviewDao.add(testFourthReview);
+
+        assertEquals("I prefer home cooking", reviewDao.getAllReviewsByRestaurantSortedNewestToOldest().get(0).getContent());
     }
 
 //helpers

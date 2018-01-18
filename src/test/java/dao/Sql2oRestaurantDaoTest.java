@@ -78,7 +78,6 @@ public class Sql2oRestaurantDaoTest {
             restaurantDao.add(testRestaurant);
             restaurantDao.addRestaurantToFoodtype(testRestaurant,testFoodtype);
             restaurantDao.addRestaurantToFoodtype(testRestaurant,otherFoodtype);
-        System.out.println(restaurantDao.getAllFoodtypesForARestaurant(testRestaurant.getId()));
 
             Foodtype[] foodtypes = {testFoodtype, otherFoodtype}; //oh hi what is this?
 
