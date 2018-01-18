@@ -104,7 +104,7 @@ public class Sql2oReviewDaoTest {
         Review testFourthReview = new Review("Sulu", 2, "I prefer home cooking", testRestaurant.getId());
         reviewDao.add(testFourthReview);
 
-        assertEquals("I prefer home cooking", reviewDao.getAllReviewsByRestaurantSortedNewestToOldest().get(0).getContent());
+        assertEquals("I prefer home cooking", reviewDao.getAllReviewsByRestaurantSortedNewestToOldest(testRestaurant.getId()).get(0).getContent());
     }
 
 //helpers
