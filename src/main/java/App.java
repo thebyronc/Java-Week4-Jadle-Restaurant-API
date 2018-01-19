@@ -27,6 +27,53 @@ public class App {
         foodtypeDao = new Sql2oFoodtypeDao(sql2o);
         reviewDao = new Sql2oReviewDao(sql2o);
 
+        post("/restaurants/:restaurantId/foodtype/:foodtypeId", "application/json", (req, res) -> {
+
+            int restaurantId = Integer.parseInt(req.params("restaurantId"));
+            int foodtypeId = Integer.parseInt(req.params("foodtypeId"));
+            Restaurant restaurant = restaurantDao.findById(restaurantId);
+            Foodtype foodtype = foodtypeDao.findById(foodtypeId);
+
+
+            if (restaurant != null && foodtype != null){
+                //both exist and can be associated
+                foodtypeDao.addFoodtypeToRestaurant(foodtype, restaurant);
+                res.status(201);
+                return gson.toJson(String.format("Restaurant '%s' and Foodtype '%s' have been associated",foodtype.getName(), restaurant.getName()));
+            }
+            else {
+                throw new ApiException(404, String.format("Restaurant or Foodtype does not exist"));
+            }
+        });
+
+        get("/restaurants/:id/foodtypes", "application/json", (req, res) -> {
+            int restaurantId = Integer.parseInt(req.params("id"));
+            Restaurant restaurantToFind = restaurantDao.findById(restaurantId);
+            if (restaurantToFind == null){
+                throw new ApiException(404, String.format("No restaurant with the id: \"%s\" exists", req.params("id")));
+            }
+            else if (restaurantDao.getAllFoodtypesForARestaurant(restaurantId).size()==0){
+                return "{\"message\":\"I'm sorry, but no foodtypes are listed for this restaurant.\"}";
+            }
+            else {
+                return gson.toJson(restaurantDao.getAllFoodtypesForARestaurant(restaurantId));
+            }
+        });
+
+        get("/foodtypes/:id/restaurants", "application/json", (req, res) -> {
+            int foodtypeId = Integer.parseInt(req.params("id"));
+            Foodtype foodtypeToFind = foodtypeDao.findById(foodtypeId);
+            if (foodtypeToFind == null){
+                throw new ApiException(404, String.format("No foodtype with the id: \"%s\" exists", req.params("id")));
+            }
+            else if (foodtypeDao.getAllRestaurantsForAFoodtype(foodtypeId).size()==0){
+                return "{\"message\":\"I'm sorry, but no restaurants are listed for this foodtype.\"}";
+            }
+            else {
+                return gson.toJson(foodtypeDao.getAllRestaurantsForAFoodtype(foodtypeId));
+            }
+        });
+
         post("/restaurants/:restaurantId/reviews/new", "application/json", (req, res) -> {
             int restaurantId = Integer.parseInt(req.params("restaurantId"));
             Review review = gson.fromJson(req.body(), Review.class);
@@ -43,8 +90,6 @@ public class App {
             res.status(201);;
             return gson.toJson(foodtype);
         });
-
-        //READ
 
         get("/restaurants", "application/json", (req, res) -> {
             if(restaurantDao.getAll().size() > 0){
@@ -66,7 +111,6 @@ public class App {
 
         get("/restaurants/:id/reviews", "application/json", (req, res) -> {
             int restaurantId = Integer.parseInt(req.params("id"));
-
             Restaurant restaurantToFind = restaurantDao.findById(restaurantId);
             List<Review> allReviews;
             if (restaurantToFind == null){
@@ -76,7 +120,7 @@ public class App {
             return gson.toJson(allReviews);
         });
 
-        get("/restaurants/:id/sortedReviews", "application/json", (req, res) -> { //// TODO: 1/18/18 generalize this route so that it can be used to return either sorted reviews or unsorted ones.  
+        get("/restaurants/:id/sortedReviews", "application/json", (req, res) -> { //// TODO: 1/18/18 generalize this route so that it can be used to return either sorted reviews or unsorted ones.
             int restaurantId = Integer.parseInt(req.params("id"));
             Restaurant restaurantToFind = restaurantDao.findById(restaurantId);
             List<Review> allReviews;
@@ -91,8 +135,6 @@ public class App {
             return gson.toJson(foodtypeDao.getAll());
         });
 
-
-        //CREATE
         post("/restaurants/new", "application/json", (req, res) -> {
             Restaurant restaurant = gson.fromJson(req.body(), Restaurant.class);
             restaurantDao.add(restaurant);
@@ -100,8 +142,6 @@ public class App {
             return gson.toJson(restaurant);
         });
 
-
-        //FILTERS
         exception(ApiException.class, (exception, req, res) -> {
             ApiException err = (ApiException) exception;
             Map<String, Object> jsonMap = new HashMap<>();
