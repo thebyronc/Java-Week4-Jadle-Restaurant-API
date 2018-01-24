@@ -15,4 +15,5 @@ dependencies {
     compile 'org.slf4j:slf4j-simple:1.7.21'
     compile 'org.sql2o:sql2o:1.5.4'
     compile 'com.google.code.gson:gson:2.5'  // to be explained shortly
+    compile group: 'com.h2database', name: 'h2', version: '1.4.191'
 }
