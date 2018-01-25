@@ -30,6 +30,14 @@ public class App extends RuntimeException {
         reviewDao = new Sql2oReviewDao(sql2o);
         conn = sql2o.open();
 
+        //DELETE
+        get("/restaurants/:id/delete", "application/json", (req, res) -> {
+            Integer restaurantToDelete = Integer.parseInt(req.params("id"));
+            restaurantDao.deleteById(restaurantToDelete);
+            res.status(201);
+            return gson.toJson("Deleted");
+        });
+
         //CREATE
         post("/restaurants/new", "application/json", (req, res) -> {
             Restaurant restaurant = gson.fromJson(req.body(), Restaurant.class);
@@ -73,6 +81,51 @@ public class App extends RuntimeException {
         get("/restaurants/:id/reviews", "application/java", (req, res) -> {
             int restaurantId = Integer.parseInt(req.params("id"));
             return gson.toJson(reviewDao.getAllReviewsByRestaurant(restaurantId));
+        });
+
+        post("/restaurants/:restaurantId/foodtype/:foodtypeId", "application/json", (req, res) -> {
+            int restaurantId = Integer.parseInt(req.params("restaurantId"));
+            int foodtypeId = Integer.parseInt(req.params("foodtypeId"));
+            Restaurant restaurant = restaurantDao.findById(restaurantId);
+            Foodtype foodtype = foodtypeDao.findById(foodtypeId);
+
+            if (restaurant != null && foodtype != null){
+                //both exist and can be associated - we should probably not connect things that are not here.
+                foodtypeDao.addFoodtypeToRestaurant(foodtype, restaurant);
+                res.status(201);
+                return gson.toJson(String.format("Restaurant '%s' and Foodtype '%s' have been associated",foodtype.getName(), restaurant.getName()));
+            }
+            else {
+                throw new ApiException(404, String.format("Restaurant or Foodtype does not exist"));
+            }
+        });
+
+        get("/restaurants/:id/foodtypes", "application/json", (req, res) -> {
+            int restaurantId = Integer.parseInt(req.params("id"));
+            Restaurant restaurantToFind = restaurantDao.findById(restaurantId);
+            if (restaurantToFind == null){
+                throw new ApiException(404, String.format("No restaurant with the id: \"%s\" exists", req.params("id")));
+            }
+            else if (restaurantDao.getAllFoodtypesForARestaurant(restaurantId).size()==0){
+                return "{\"message\":\"I'm sorry, but no foodtypes are listed for this restaurant.\"}";
+            }
+            else {
+                return gson.toJson(restaurantDao.getAllFoodtypesForARestaurant(restaurantId));
+            }
+        });
+
+        get("/foodtypes/:id/restaurants", "application/json", (req, res) -> {
+            int foodtypeId = Integer.parseInt(req.params("id"));
+            Foodtype foodtypeToFind = foodtypeDao.findById(foodtypeId);
+            if (foodtypeToFind == null){
+                throw new ApiException(404, String.format("No foodtype with the id: \"%s\" exists", req.params("id")));
+            }
+            else if (foodtypeDao.getAllRestaurantsForAFoodtype(foodtypeId).size()==0){
+                return "{\"message\":\"I'm sorry, but no restaurants are listed for this foodtype.\"}";
+            }
+            else {
+                return gson.toJson(foodtypeDao.getAllRestaurantsForAFoodtype(foodtypeId));
+            }
         });
 
 
