@@ -1,10 +1,11 @@
 $(document).ready(function() {
   $('#testClick').click(function() {
     // let restaurantId = $('#restaurantId').val();
-    let restaurantId = 4;
+    let restaurantId = 1;
+    let path = 'http://localhost:4567/restaurants/' + restaurantId;
     $('#location').val("");
     $.ajax({
-      url: `http://localhost:4567/restaurants/5`,
+      url: `http://localhost:4567/restaurants/{restaurantId}`,
       type: 'GET',
       data: {
         format: 'json'
@@ -28,7 +29,7 @@ $(document).ready(function() {
       },
       success: function(response) {
         for (i = 0 ; i < response.length; i++ ){
-            $('#allRestaurants').append(`<p>Name of Restaurant: ${response[i].name}, ${response[i].id}, ${response[i].zipcode} </p>`);
+            $('#allRestaurants').append(`<p>Name of Restaurant:${response[i].id}, ${response[i].name}, ${response[i].id}, ${response[i].zipcode} </p>`);
         }
       },
       error: function() {
@@ -39,8 +40,9 @@ $(document).ready(function() {
 
 
   $('#toDelete').click(function() {
+    var restaurantId = 2;
     $.ajax({
-      url: `http://localhost:4567/restaurants/5/delete`,
+      url: "http://localhost:4567/restaurants/" + restaurantId + "/delete",
       type: 'GET',
       data: {
         format: 'json'
